@@ -2,17 +2,49 @@
 
 const express = require('express');
 const app = express();
+const bodyParser = require('body-parser');
+
+
+
+
+//middleware 
+
+app.use(bodyParser.json());
 
 require('dotenv/config');
 
 const api = process.env.API_URL
 
+
 //specifying the initial route of our application
 
-app.get(api+'/products', (req,res) => {
-    res.send('the bundesliga season starts today!!!');
+app.get(`${api}/products`, (req,res) => {
+    const jerseyCount = {
+        id: 1,
+        name: 'Erling Haaland',
+        club: 'Borrusia Dortmund',
+        price: 89.99
+    }
+    res.send(jerseyCount);
 })
 
+
+
+app.get(`${api}/details`, (req, res) => {
+    const details = {
+        id: 1,
+        status: 'return request',
+        condition: 'torn',
+        refundAccepted: true
+    }
+    res.send(details);
+})
+
+app.post(`${api}/products`, (req, res) => {
+    const newApparel = req.body
+    console.log(newApparel);
+    res.send(newApparel);
+} )
 
 
 app.listen(3000, () => {
